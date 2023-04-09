@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>jQuery New Account Creation Form</title>
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<h1>jQuery New Account Creation Form</h1>
+
+<div id="formdiv">
+  
+<form id="new-account-form">
+<p><input type="email" size="30" name="email" value="" placeholder="Enter your email address"><span style="margin-left:10px;  box-shadow: black 0px 1px 20px 1px; padding: 10px; border-radius: 100px;" id="emailError"></span></p>
+<p><input type="text" size="30" name="password1" value="" placeholder="Enter a password"><span style="margin-left:10px; box-shadow: black 0px 1px 20px 1px; padding: 10px; border-radius: 100px;"  class="passwordError"></span></p>
+<p><input type="text" size="30" name="password2" value="" placeholder="Reenter the password"><span style="margin-left:10px; box-shadow: black 0px 1px 20px 1px; padding: 10px; border-radius: 100px;"  class="passwordError"></span></p>
+<button type="submit">Create Account</button>
+<button type="reset">Reset Form</button>
+
+</form>
+<p>Form Output: <span id="output"></span></p>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+      
+// $("#new-account-form").on("submit",function(event) {
+//         event.preventDefault();
+//         var $answer = $("#quiz-answer");
+//         var answer = $answer.val();
+//         console.log(answer);
+//         if (answer === "crocodile") {
+//             $("#result").text("Wow! You got it! Wooo party!");
+//         } else {
+//         $("#result").text("Try again!")
+//       
+//     });
+
+// $("#croc-form").on("submit",function(event) {
+//         event.preventDefault();
+//         var $crocSpecies = $(this).find("[name=species]");
+        
+//         var crocSpecies = $crocSpecies.val();
+//         var $img = $("<img>");
+//         $img.width(100);
+//         $img.attr("src", crocImages[crocSpecies]);
+//         $img.appendTo("body");
+        
+//   });
+
+    $("#emailError").hide();
+    $(".passwordError").hide();
+
+    var email = $("input[name='email']");
+    var password1 = $("input[name='password1']");
+    var password2 = $("input[name='password2']");
+
+function isValidEmail() {
+   em = $.trim($("input[name='email']").val());
+   const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+   if (emailPattern.test(em)) {
+    $("#emailError").hide();
+    email.css("border","1px solid black");
+       return true;
+   }
+   else {
+      // Add your code here to handle the error. 
+      $("#emailError").show();
+      $("#emailError").html("&#8592; Invalid Email");
+      $("#emailError").css("color", "red");
+      email.css("border","2px solid red");
+      return false;  
+   }
+}
+
+function validatePassword() {
+    var confirmPasswordValue = $("input[name='password1']").val();
+    var passwordValue = $("input[name='password2']").val();
+    if (passwordValue != confirmPasswordValue || !passwordValue) {
+      $(".passwordError").show();
+      $(".passwordError").html("&larr; Password didn't Match");
+      $(".passwordError").css("color", "red");
+      password1.css("border","2px solid red");
+      password2.css("border","2px solid red");
+      $("#output").hide();
+      confirmPasswordError = false;
+      return false;
+    } else {
+      $(".passwordError").hide();
+      $("#output").show();
+      password1.css("border","1px solid black");
+      password2.css("border","1px solid black");
+        return true;
+    }
+  }
+
+function clearResults() {
+
+  $("#output").empty();
+  // $("#emailoutput").empty();
+  // $("#emailoutput").removeClass();
+
+
+}
+
+$("input").focus(function() {
+    clearResults();
+    
+ }); 
+      
+    $("#new-account-form").on("reset",function(event) {
+
+                $("#emailError").hide();
+                $(".passwordError").hide();
+                password1.css("border","1px solid black");
+                password2.css("border","1px solid black");
+                email.css("border","1px solid black");
+                clearResults();
+
+
+    });
+
+ $("#new-account-form").on("submit",function(event) {
+        event.preventDefault();
+        // validatePassword();
+        // isValidEmail();
+        clearResults();
+        // if (!email || !passwordValue || !confirmPasswordValue) {
+
+        // }
+
+        if (validatePassword() == true && isValidEmail() == true) {
+            $("#output").text("Confirmed!");
+            $("#emailError").hide();
+            $(".passwordError").hide();
+            var $outputText = $("<p>").css("color", "black");
+            $outputText.text("Your email: ");
+            $outputText.appendTo("#output");
+            var $output = $("<p>");
+            $output.text(email.val());
+            $output.appendTo("#output");
+            // email.val("");
+            // $output.attr("id", "emailoutput")
+            // $("#new-account-form").submit();
+
+            
+
+        } else {
+
+            validatePassword();
+            isValidEmail();
+            
+        }
+
+ });
+
+
+</script>
+</body>
+</html>
